@@ -2,7 +2,7 @@ import numpy as np
 from tqdm import tqdm
 
 INPUT_LEN = 3
-NUM_EPOCHS = 200
+NUM_EPOCHS = 150
 lr = 0.01
 
 
@@ -55,12 +55,14 @@ class SimpleModel():
         :param labels: test labels.
         :return: loss
         """
+        print("Started training")
+
         loss = 0
         for i, e in enumerate(test_x):
             h = self.forward(e)
             loss += (labels[i] - h) ** 2
 
-        print("Evaluation, Loss =", loss)
+        print("Evaluation, Loss = %.5f" % loss[0])
         return loss
 
 
@@ -75,6 +77,6 @@ if __name__ == '__main__':
     # Create simple test data.
     t_x = [[1, 0, 0], [0, 1, 1]]
     t_y = [1, 0]
-    
+
     # Run evaluation.
     model.evaluate(t_x, t_y)
