@@ -31,15 +31,11 @@ class SimpleModel():
             for i, x in enumerate(train_x):
                 h = self.forward(x)
 
-                loss += (labels[i] - h) ** 2
+                loss += (h - labels[i])[0] ** 2
 
-                # Get the dL/dW (gradients).
-                d_w = np.multiply(2 * (h - labels[i]), x)
+                self.update_parameters(h[0], labels[i], x)
 
-                # Update the weights according to loss.
-                self.w = self.w - lr * d_w
-
-            print("Epoch", e, "loss:", loss)
+            print("Epoch", e, "loss: %.7f" % loss)
 
     def forward(self, x):
         """
@@ -64,18 +60,30 @@ class SimpleModel():
         print("Evaluation, Loss = %.5f" % loss[0])
         return loss
 
+    def update_parameters(self, h, label, x):
+        """
+        Update the model .
+        :param h: a predicted value
+        :param label: the ground truth label.
+        """
+        # Get the dL/dW (gradients).
+        d_w = np.multiply(2 * (h - label), x)
+
+        # Update the weights according to loss.
+        self.w = self.w - lr * d_w
+
 
 if __name__ == '__main__':
     # Create simple training data.
-    x = [[0, 0, 0.9], [0.9, 0.6, 0.5], [0.99, 0.1, .2], [0, 0.89, 0.99]]
-    y = [0, 0.98, 1, 0]
+    x = [[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]]
+    y = [0, 1, 1, 0]
 
     model = SimpleModel(INPUT_LEN)
     model.train(x, y, NUM_EPOCHS)
 
     # Create simple test data.
-    t_x = [[0.9, 0.4, 0.5], [0.1, 0.2, 0.3]]
-    t_y = [0.97, 0]
+    t_x = [[1, 0, 0], [0, 0, 0]]
+    t_y = [1, 0]
 
     # Run evaluation.
     model.evaluate(t_x, t_y)
