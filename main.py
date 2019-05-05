@@ -67,15 +67,15 @@ class SimpleModel():
 
 if __name__ == '__main__':
     # Create simple training data.
-    x = [[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]]
-    y = [0, 1, 1, 0]
+    x = [[0, 0, 0.9], [0.9, 0.6, 0.5], [0.99, 0.1, .2], [0, 0.89, 0.99]]
+    y = [0, 0.98, 1, 0]
 
     model = SimpleModel(INPUT_LEN)
     model.train(x, y, NUM_EPOCHS)
 
     # Create simple test data.
-    t_x = [[1, 0, 0], [0, 0, 0]]
-    t_y = [1, 0]
+    t_x = [[0.9, 0.4, 0.5], [0.1, 0.2, 0.3]]
+    t_y = [0.97, 0]
 
     # Run evaluation.
     model.evaluate(t_x, t_y)
