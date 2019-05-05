@@ -2,7 +2,7 @@ import numpy as np
 from tqdm import tqdm
 
 INPUT_LEN = 3
-NUM_EPOCHS = 150
+NUM_EPOCHS = 200
 lr = 0.01
 
 
@@ -20,11 +20,12 @@ class SimpleModel():
 
     def train(self, train_x, labels, epochs):
         """
-        Train the model
+        Train the model, For simplicity assuming batch size is equal to 1.
         :param train_x: The training examples.
         :param labels: The labels of the training examples.
         :param epochs: The number of epochs
         """
+        print("Started training")
         for e in tqdm(range(epochs)):
             loss = 0
             for i, x in enumerate(train_x):
@@ -55,8 +56,6 @@ class SimpleModel():
         :param labels: test labels.
         :return: loss
         """
-        print("Started training")
-
         loss = 0
         for i, e in enumerate(test_x):
             h = self.forward(e)
@@ -75,7 +74,7 @@ if __name__ == '__main__':
     model.train(x, y, NUM_EPOCHS)
 
     # Create simple test data.
-    t_x = [[1, 0, 0], [0, 1, 1]]
+    t_x = [[1, 0, 0], [0, 0, 0]]
     t_y = [1, 0]
 
     # Run evaluation.
